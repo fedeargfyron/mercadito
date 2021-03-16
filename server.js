@@ -1,0 +1,10 @@
+const express = require('express')
+const app = express()
+const expressLayout = require('express-ejs-layouts')
+const mongoose = require('mongoose')
+app.use(expressLayout)
+
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views')
+const indexRouter = require('./routes/index')
+app.use('/', indexRouter)
