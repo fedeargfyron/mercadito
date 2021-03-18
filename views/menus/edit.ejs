@@ -1,0 +1,6 @@
+<h2>Editar menú</h2>
+<form method="POST" action = "/menus/<%= menu.id %>?_method=PUT">
+    <%- include('_form_fields') %> 
+    <a href = "/menus">Cancelar</a>
+    <button type = "submit">Editar</button>
+</form>

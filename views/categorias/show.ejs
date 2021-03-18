@@ -1,0 +1,13 @@
+<h2>Categoria: <%= categoria.nombre %></h2>
+<a href = "/categorias/<%= categoria.id %>/edit">Editar</a>
+<%- include('../partials/deleteForm', { url: `/categorias/${categoria.id}`}) %>
+<% if(MenusDeCategoria.length > 0) { %>
+    <% MenusDeCategoria.forEach(menu => { %>
+        <div>
+            <img height="150" width = "100"src ="<%= menu.coverImagePath %>">
+            <div>
+                <%= menu.descripcion %> 
+            </div>
+        </div>
+    <% }) %> 
+<% } %> 

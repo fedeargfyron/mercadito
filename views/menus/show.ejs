@@ -1,0 +1,25 @@
+<h2><%= menu.nombre %></h2>
+<div>
+    <img src="<%= menu.coverImagePath %>">
+    <a href = "/menus/<%= menu.id %>/edit">Editar</a>
+    <%- include('../partials/deleteForm', {url: `/menus/${menu.id}`}) %> 
+    <a href = "/categorias/<%= menu.categoria %>">Ver categoria</a>
+    <div>
+        <div>
+            <label for = "precio">Precio:</label>
+            <p>$<%= menu.precio %></p>
+        </div>
+        <div>
+            <label for = "descripcion">Descripcion:</label>
+            <p>$<%= menu.descripcion %></p>
+        </div>
+        <div>
+            <label for = "precio">Precio:</label>
+            <p>$<%= menu.precio %></p>
+        </div>
+        <div>
+            <label for = "categoria">categoria:</label>
+            <p><%= menu.categoria.nombre %></p>
+        </div>
+    </div>
+</div>

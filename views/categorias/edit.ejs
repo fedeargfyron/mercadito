@@ -1,0 +1,7 @@
+<h2>Editar categoria</h2>
+<form method="POST" action= "/categorias/<%= categoria.id %>?_method=PUT">
+    <%- include('_form_fields') %>
+    <a href = "/categorias/<%= categoria.id %>">Cancelar</a>
+    <button type = "submit">Editar</button>
+    
+</form>

@@ -1,0 +1,28 @@
+<div>
+    <label for = "nombre">Nombre:</label>
+    <input type = "text" name = "nombre" value="<%= menu.nombre %>">
+</div>
+<div>
+    <label for = "precio">Precio:</label>
+    <input type = "number" name = "precio" value = "<%= menu.precio %>">
+</div>
+<div>
+    <label for = "categoria">Categoria:</label>
+    <select name = "categoria">
+    <% categorias.forEach(categoria => { %>
+        <% if(categoria.id === menu.categoria) { %> 
+            <option selected label="<%= categoria.nombre %>" value = "<%= categoria.id %>"></option>
+        <% } else { %>
+            <option  label="<%= categoria.nombre %>" value = "<%= categoria.id %>"></option>
+        <% } %>  
+    <% }) %>
+    </select>
+</div>
+<div>
+    <label for = "descripcion">Descripcion:</label>
+    <textarea name = "descripcion"><%= menu.descripcion %></textarea>
+</div>
+<div>
+    <label for = "imagen">Imagen:</label>
+    <input type = "file" name = "imagen" class = "filepond">
+</div>

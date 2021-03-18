@@ -1,8 +1,15 @@
 <h2>Todas las categorias</h2>
-
+<form action = "/categorias" method="GET">
+    <label>Categoria</label>
+    <input type = "text" name = "nombreCat" value = "<%= searchOptions.nombreCat %>">
+    <button type= "submit">Buscar</button>
+</form>
+<br>
 <% categorias.forEach(cat =>{ %> 
     <label><%= cat.nombre %></label>
-    <a href="">Editar</a>
-    <a href="">Eliminar</a>
+    <a href = "/categorias/<%= cat.id %>">Ver</a>
+    <a href="/categorias/<%= cat.id %>/edit">Editar</a>
+    <!-- cambiar eliminar -->
+    <%- include('../partials/deleteForm', {url: `/categorias/${cat.id}`}) %> 
     <br>
-<% }) %> 
+<% }) %>

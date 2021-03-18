@@ -1,1 +1,19 @@
-<h2>Hola</h2>
+<h2>Todos los menus</h2>
+<form action= "/menus" method="GET">
+    <label>Buscar menú</label>
+    <input type = "text" name= "nombre" value = "<%= searchOptions.nombre %>">
+    <button type = "submit">Buscar</button>
+</form>
+
+
+<% menus.forEach(menu => { %>
+    <div>
+        <img height="150" width = "100"src ="<%= menu.coverImagePath %>">
+        <div>
+            <%= menu.descripcion %> 
+        </div>
+        <a href = "/menus/<%= menu.id %>">Ver</a>
+        <a href = "/menus/<%= menu.id %>/edit">Editar</a>
+        <%- include('../partials/deleteForm', {url: `/menus/${menu.id}`}) %> 
+    </div>
+<% }) %>
