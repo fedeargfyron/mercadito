@@ -1,0 +1,6 @@
+<% if(locals.user != null) { %> 
+    <form action ="/login/logout?_method=DELETE" method = "POST">
+        <button type = "submit">Desloguear</button>
+    </form>
+    <%= user.nombre %>
+<% } %> 

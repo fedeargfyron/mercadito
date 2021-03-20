@@ -9,10 +9,12 @@ router.get('/', async (req, res) =>{
         searchOptions.nombre = new RegExp(req.query.nombreCat, 'i')
     }
     try{
+        const user = await req.user
         const categorias = await Categoria.find(searchOptions)
         res.render('categorias/index', {
             categorias: categorias,
-            searchOptions: req.query
+            searchOptions: req.query,
+            user: user
         })
     } catch {
         res.redirect('/')
@@ -21,7 +23,10 @@ router.get('/', async (req, res) =>{
 })
 
 router.get('/new', async(req,res) =>{
-    res.render('categorias/new', { categoria: new Categoria() })
+    const user = await req.user
+    res.render('categorias/new', { 
+        categoria: new Categoria(), 
+        user: user })
 })
 
 router.post('/', async (req, res) =>{
@@ -43,10 +48,12 @@ router.post('/', async (req, res) =>{
 router.get('/:id', async (req, res) =>{
     const categoria = await Categoria.findById(req.params.id)
     const menus = await Menu.find({ categoria: categoria.id }).limit(6).exec()
+    const user = await req.user
     try{
         res.render('categorias/show', {
             categoria: categoria,
-            MenusDeCategoria: menus
+            MenusDeCategoria: menus,
+            user: user
         })
     } catch {
         res.redirect('categorias')
@@ -56,7 +63,12 @@ router.get('/:id', async (req, res) =>{
 router.get('/:id/edit', async (req, res) =>{
     try{
         const categoria = await Categoria.findById(req.params.id)
-        res.render('categorias/edit', {categoria: categoria})
+        const user = await req.user
+        res.render('categorias/edit', {
+            categoria: categoria,
+            user: user
+        })
+        
     } catch {
         res.redirect('categorias')
     }
@@ -99,5 +111,17 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+function checkNoAuthenticated(req, res, next) {
+    if(req.isAuthenticated()){
+        res.redirect('/')
+    }
+    next()
+}
 
+function checkAuthenticated(req, res, next) {
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/login')
+}
 module.exports = router

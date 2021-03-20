@@ -11,22 +11,26 @@ router.get('/', async (req, res) =>{
     }
     try{
         const menus = await Menu.find(searchOptions)
+        const user = await req.user
         res.render('menus/index', { 
             menus: menus, 
-            searchOptions: req.query
+            searchOptions: req.query,
+            user: user
         })
     } catch {
         res.redirect('/')
     }
 })
 
-router.get('/new', async(req, res) =>{
+router.get('/new', checkAuthenticated, async(req, res) =>{
     try{
         const categorias = await Categoria.find({})
         const menu = new Menu()
+        const user = await req.user
         res.render('menus/new', {
             menu: menu,
-            categorias: categorias
+            categorias: categorias,
+            user: user
         }) 
     } catch {
 
@@ -61,8 +65,10 @@ router.get('/:id', async (req, res) =>{
         const menu = await Menu.findById(req.params.id)
                                 .populate('categoria')
                                 .exec()
+        const user = await req.user
         res.render('menus/show', {
-            menu: menu
+            menu: menu,
+            user: user
         })
     } catch {
         
@@ -73,9 +79,11 @@ router.get('/:id/edit', async (req, res) =>{
     try{
         const menu = await Menu.findById(req.params.id)
         const categoria = await Categoria.find({})
+        const user = await req.user
         res.render("menus/edit", {
             menu: menu,
-            categorias: categoria
+            categorias: categoria,
+            user: user
         })
     } catch {
         res.redirect('/menus')
@@ -130,6 +138,23 @@ function saveCover(menu, coverEncoded){
         menu.imgType = cover.type
     }
 }
+
+function checkNoAuthenticated(req, res, next) {
+    if(req.isAuthenticated()){
+        res.redirect('/')
+    }
+    next()
+}
+
+function checkAuthenticated(req, res, next) {
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/login')
+}
+
+
+
 
 
 module.exports = router

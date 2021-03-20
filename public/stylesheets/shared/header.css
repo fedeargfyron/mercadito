@@ -1,0 +1,36 @@
+:root{
+    --color-text-hover: hsl(var(--color-base-hue), 100%, 80%)
+}
+
+.nav-container{
+    min-width: 100vw;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;  
+    font-size: .75rem;
+    margin-bottom: 5rem;
+    background-color: hsl(var(--color-base-hue), 10%, 10%, 0.7);
+}
+
+.nav-container ul{
+    position: fixed;
+    width: 30%;
+    height: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-container li {
+    list-style: none;
+    padding-right: 1rem;
+}
+.nav-container a {
+    text-decoration: none;
+    color: var(--color-text-light);
+}
+.nav-container a:hover {
+    color: var(--color-text-hover)
+}
