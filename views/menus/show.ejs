@@ -1,8 +1,12 @@
 <h2><%= menu.nombre %></h2>
 <div>
     <img src="<%= menu.coverImagePath %>">
+    <% if(locals.user != null) { %>
+        <% if(user.role === "admin") { %>
     <a href = "/menus/<%= menu.id %>/edit">Editar</a>
     <%- include('../partials/deleteForm', {url: `/menus/${menu.id}`}) %> 
+            <% } %> 
+    <% } %> 
     <a href = "/categorias/<%= menu.categoria %>">Ver categoria</a>
     <div>
         <div>

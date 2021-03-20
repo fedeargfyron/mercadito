@@ -22,14 +22,14 @@ router.get('/', async (req, res) =>{
     
 })
 
-router.get('/new', async(req,res) =>{
+router.get('/new', checkAdmin, async(req,res) =>{
     const user = await req.user
     res.render('categorias/new', { 
         categoria: new Categoria(), 
         user: user })
 })
 
-router.post('/', async (req, res) =>{
+router.post('/', checkAdmin, async (req, res) =>{
     const categoria = new Categoria({
         nombre: req.body.nombre
     })
@@ -60,7 +60,7 @@ router.get('/:id', async (req, res) =>{
     }
 })
 
-router.get('/:id/edit', async (req, res) =>{
+router.get('/:id/edit', checkAdmin, async (req, res) =>{
     try{
         const categoria = await Categoria.findById(req.params.id)
         const user = await req.user
@@ -74,7 +74,7 @@ router.get('/:id/edit', async (req, res) =>{
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', checkAdmin, async (req, res) => {
     let categoria
     try{
         categoria = await Categoria.findById(req.params.id)
@@ -96,7 +96,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkAdmin, async (req, res) => {
     let categoria
     try{
         categoria = await Categoria.findById(req.params.id)
@@ -124,4 +124,18 @@ function checkAuthenticated(req, res, next) {
     }
     res.redirect('/login')
 }
+
+async function checkAdmin(req, res, next) {
+    console.log("llegue admin")
+    if(req.isAuthenticated()){
+        const user = await req.user
+        console.log(user.role)
+        if(user.role === 'admin'){
+            console.log("soy admin")
+            return next()
+        }
+        else return res.redirect('/')
+    } else return res.redirect('/')
+}
+
 module.exports = router

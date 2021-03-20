@@ -8,8 +8,12 @@
 <% categorias.forEach(cat =>{ %> 
     <label><%= cat.nombre %></label>
     <a href = "/categorias/<%= cat.id %>">Ver</a>
-    <a href="/categorias/<%= cat.id %>/edit">Editar</a>
-    <!-- cambiar eliminar -->
-    <%- include('../partials/deleteForm', {url: `/categorias/${cat.id}`}) %> 
+    <% if(locals.user != null) { %>
+        <% if(user.role === "admin") { %>
+            <a href="/categorias/<%= cat.id %>/edit">Editar</a>
+            <!-- cambiar eliminar -->
+            <%- include('../partials/deleteForm', {url: `/categorias/${cat.id}`}) %> 
+        <% } %>
+    <% } %>  
     <br>
 <% }) %>

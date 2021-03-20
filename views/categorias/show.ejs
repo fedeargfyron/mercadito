@@ -1,6 +1,10 @@
 <h2>Categoria: <%= categoria.nombre %></h2>
-<a href = "/categorias/<%= categoria.id %>/edit">Editar</a>
-<%- include('../partials/deleteForm', { url: `/categorias/${categoria.id}`}) %>
+<% if(locals.user != null) { %>
+    <% if(user.role === "admin") { %>
+        <a href = "/categorias/<%= categoria.id %>/edit">Editar</a>
+        <%- include('../partials/deleteForm', { url: `/categorias/${categoria.id}`}) %>
+    <% } %> 
+<% } %> 
 <% if(MenusDeCategoria.length > 0) { %>
     <% MenusDeCategoria.forEach(menu => { %>
         <div>

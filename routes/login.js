@@ -33,7 +33,8 @@ router.post('/register', checkNoAuthenticated, async (req, res) => {
             nombre: req.body.nombre,
             apellido: req.body.apellido,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: "basic"
         })
         user.save()
         res.redirect('/login')
@@ -102,5 +103,14 @@ function checkAuthenticated(req, res, next) {
         return next()
     }
     res.redirect('/login')
+}
+
+function checkAdmin(req, res, next) {
+    if(checkAuthenticated){
+        if(req.user.role === "admin"){
+            return next()
+        }
+        else return
+    }
 }
 module.exports = router

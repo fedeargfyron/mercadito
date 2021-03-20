@@ -22,7 +22,7 @@ router.get('/', async (req, res) =>{
     }
 })
 
-router.get('/new', checkAuthenticated, async(req, res) =>{
+router.get('/new', checkAdmin, async(req, res) =>{
     try{
         const categorias = await Categoria.find({})
         const menu = new Menu()
@@ -38,7 +38,7 @@ router.get('/new', checkAuthenticated, async(req, res) =>{
     
 })
 
-router.post('/', async(req, res) =>{
+router.post('/', checkAdmin, async(req, res) =>{
     const menu = new Menu({
         nombre: req.body.nombre,
         precio: req.body.precio,
@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) =>{
     }
 })
 
-router.get('/:id/edit', async (req, res) =>{
+router.get('/:id/edit', checkAdmin, async (req, res) =>{
     try{
         const menu = await Menu.findById(req.params.id)
         const categoria = await Categoria.find({})
@@ -91,7 +91,7 @@ router.get('/:id/edit', async (req, res) =>{
 })
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', checkAdmin, async (req, res) => {
     let menu
     try{
         menu = await Menu.findById(req.params.id)
@@ -114,7 +114,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkAdmin, async (req, res) => {
     let menu
     try{
         menu = await Menu.findById(req.params.id)
@@ -153,8 +153,16 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/login')
 }
 
-
-
+async function checkAdmin(req, res, next) {
+    console.log("llegue admin")
+    if(req.isAuthenticated()){
+        const user = await req.user
+        if(user.role === 'admin'){
+            return next()
+        }
+        else return res.redirect('/')
+    } else return res.redirect('/')
+}
 
 
 module.exports = router

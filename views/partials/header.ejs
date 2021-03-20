@@ -10,15 +10,18 @@
                 <li>
                     <a href = "/menus">Menús</a>
                 </li>
+                <% if (locals.user == null) { %> 
                 <li>
                     <a href = "/login/register">Registrarse</a>
                 </li>
                 <li>
                     <a href = "/login">Iniciar Sesion</a>
                 </li>
+                <% } else { %> 
                 <li>
                     <a href = "#"></a><i class="fa fa-shopping-cart"></i></a>
                 </li>
+                <% } %> 
             </ul>
     </nav>
 </header>

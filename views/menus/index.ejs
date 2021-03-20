@@ -13,7 +13,11 @@
             <%= menu.descripcion %> 
         </div>
         <a href = "/menus/<%= menu.id %>">Ver</a>
-        <a href = "/menus/<%= menu.id %>/edit">Editar</a>
-        <%- include('../partials/deleteForm', {url: `/menus/${menu.id}`}) %> 
+        <% if(locals.user != null) { %>
+            <% if(user.role === "admin") { %>
+                <a href = "/menus/<%= menu.id %>/edit">Editar</a>
+                <%- include('../partials/deleteForm', {url: `/menus/${menu.id}`}) %> 
+            <% } %> 
+        <% } %> 
     </div>
 <% }) %>
