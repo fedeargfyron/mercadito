@@ -16,6 +16,7 @@ const menusRouter = require('./routes/menus')
 const categoriaRouter = require('./routes/categorias')
 const productosRouter = require('./routes/productos')
 const loginRouter = require('./routes/login')
+const carritoRouter = require('./routes/carrito')
 const mongoose = require('mongoose')
 const passport = require('passport')
 
@@ -47,7 +48,7 @@ app.use('/login', loginRouter)
 app.use('/menus', menusRouter)
 app.use('/productos', productosRouter)
 app.use('/categorias', categoriaRouter)
-
+app.use('/carrito', carritoRouter)
 app.delete('/logout', (req, res) => {
     req.logOut()
     req.redirect('/login')

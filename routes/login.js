@@ -1,7 +1,7 @@
 const express = require('express')
 const Usuario = require('../models/usuario')
 const router = express.Router()
-
+const Carrito = require('../models/carrito')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
@@ -29,14 +29,22 @@ router.get('/register', checkNoAuthenticated, async (req, res) => {
 router.post('/register', checkNoAuthenticated, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     try {
+        const carrito = new Carrito({
+            buyMenuArray: [],
+            buyProductoArray: [],
+            total: 0
+        })
         const user = new Usuario ({
             nombre: req.body.nombre,
             apellido: req.body.apellido,
             email: req.body.email,
             password: hashedPassword,
-            role: "basic"
+            role: "basic",
+            carrito: carrito.id
         })
+        carrito.usuario = user.id
         user.save()
+        carrito.save()
         res.redirect('/login')
     } catch (err) {
         return console.log('ERRRROR:' + err)

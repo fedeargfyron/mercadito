@@ -20,6 +20,11 @@ const usuarioSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true
+    },
+    carrito:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Carrito'
     }
 })
 

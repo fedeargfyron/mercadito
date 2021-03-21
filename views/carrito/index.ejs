@@ -1,0 +1,14 @@
+<h2>Estas en el carrito</h2>
+<h2>Carrito</h2>
+<br>
+<% if(carrito.buyMenuArray.length > 0) { %> 
+    <% carrito.buyMenuArray.forEach(menu => { %> 
+        <div>
+            <p><%= menu.contador %></p>
+            <p><%= menu.nombre %></p> 
+            <p><%= menu.precio %></p>
+            <%- include('../partials/deleteForm', { url: `/carrito/menus/${menu.menu}`}) %>
+        </div>
+        <br>
+    <% }) %> 
+<% } %> 
